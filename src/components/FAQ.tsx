@@ -42,7 +42,7 @@ export const FAQ: React.FC = () => {
   };
 
   return (
-    <section className="w-full max-w-md mx-auto px-4 py-4 space-y-3">
+    <section className="w-full max-w-md mx-auto px-3.5 sm:px-4 py-3.5 space-y-3">
       <div className="text-center space-y-1 mb-2">
         <div className="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-[#C87A8B] bg-[#FDF7F8] px-3 py-1 rounded-full border border-[#D98C9D]/30">
           <HelpCircle className="w-3.5 h-3.5 text-[#D4AF37]" />

@@ -26,7 +26,7 @@ const HIGHLIGHTS = [
 
 export const ClinicHighlights: React.FC = () => {
   return (
-    <section className="w-full max-w-md mx-auto px-4 py-4 space-y-3">
+    <section className="w-full max-w-md mx-auto px-3.5 sm:px-4 py-3 space-y-3">
       <div className="grid grid-cols-2 gap-2.5">
         {HIGHLIGHTS.map((item, idx) => {
           const Icon = item.icon;

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { X, Calendar as CalendarIcon, Clock, CheckCircle2, MessageCircle, ExternalLink, Download, Sparkles, User, Phone, FileText } from 'lucide-react';
-import { ServiceItem, AppointmentData } from '../types';
+import { AppointmentData } from '../types';
 import { CLINIC_SERVICES } from '../data/services';
 import { 
   buildWhatsAppLink, 
@@ -97,19 +97,22 @@ export const AppointmentModal: React.FC<AppointmentModalProps> = ({
       aria-labelledby="modal-title"
     >
       <div 
-        className="w-full max-w-lg bg-[#FAFAFA] rounded-t-3xl sm:rounded-3xl shadow-2xl border border-[#C87A8B]/30 max-h-[92vh] flex flex-col overflow-hidden animate-in slide-in-from-bottom duration-300"
+        className="w-full max-w-lg bg-[#FAFAFA] rounded-t-3xl sm:rounded-3xl shadow-2xl border border-[#C87A8B]/30 max-h-[90dvh] flex flex-col overflow-hidden animate-in slide-in-from-bottom duration-300"
       >
+        {/* Grab Handle for mobile swipe affordance */}
+        <div className="w-10 h-1 bg-[#2B2627]/15 rounded-full mx-auto my-2 sm:hidden shrink-0" />
+
         {/* Modal Header */}
-        <div className="relative px-5 pt-5 pb-4 bg-gradient-to-r from-[#FDF7F8] to-[#FFF] border-b border-[#C87A8B]/20 flex items-center justify-between shrink-0">
-          <div className="flex items-center gap-2.5">
-            <div className="w-9 h-9 rounded-full bg-gradient-to-tr from-[#D4AF37] to-[#C87A8B] flex items-center justify-center text-white shadow-xs">
+        <div className="relative px-4 sm:px-5 pt-2 sm:pt-4 pb-3 bg-gradient-to-r from-[#FDF7F8] to-[#FFF] border-b border-[#C87A8B]/20 flex items-center justify-between shrink-0">
+          <div className="flex items-center gap-2.5 min-w-0">
+            <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-[#D4AF37] to-[#C87A8B] flex items-center justify-center text-white shadow-xs shrink-0">
               <Sparkles className="w-4 h-4" />
             </div>
-            <div>
-              <h2 id="modal-title" className="font-serif text-lg font-bold text-[#2B2627]">
-                Agendamento Inteligente & Triagem
+            <div className="min-w-0">
+              <h2 id="modal-title" className="font-serif text-base sm:text-lg font-bold text-[#2B2627] truncate">
+                Agendamento & Triagem
               </h2>
-              <p className="text-xs text-[#C87A8B] font-medium">
+              <p className="text-[11px] sm:text-xs text-[#C87A8B] font-medium truncate">
                 Dra. Sabrina Oliveira • Pacoval, Macapá
               </p>
             </div>
@@ -118,7 +121,7 @@ export const AppointmentModal: React.FC<AppointmentModalProps> = ({
           <button
             onClick={onClose}
             type="button"
-            className="w-8 h-8 rounded-full bg-white border border-[#C87A8B]/20 text-[#2B2627]/60 hover:text-[#2B2627] flex items-center justify-center transition-colors hover:bg-[#FDF7F8]"
+            className="w-8 h-8 rounded-full bg-white border border-[#C87A8B]/20 text-[#2B2627]/60 hover:text-[#2B2627] flex items-center justify-center transition-colors hover:bg-[#FDF7F8] shrink-0 ml-2"
             aria-label="Fechar modal"
           >
             <X className="w-4 h-4" />
@@ -126,10 +129,10 @@ export const AppointmentModal: React.FC<AppointmentModalProps> = ({
         </div>
 
         {/* Scrollable Form Body */}
-        <div className="overflow-y-auto p-5 space-y-5 text-left text-sm text-[#2B2627]">
+        <div className="overflow-y-auto p-4 sm:p-5 space-y-4 text-left text-sm text-[#2B2627] overscroll-contain">
           {/* Step 1: Select Service */}
           <div>
-            <label className="block text-xs font-semibold uppercase tracking-wider text-[#6B6264] mb-2">
+            <label className="block text-[11px] font-semibold uppercase tracking-wider text-[#6B6264] mb-1.5">
               1. Selecione o Tratamento Desejado
             </label>
             <div className="grid grid-cols-2 gap-2">
@@ -140,20 +143,20 @@ export const AppointmentModal: React.FC<AppointmentModalProps> = ({
                     key={s.id}
                     type="button"
                     onClick={() => setSelectedServiceId(s.id)}
-                    className={`p-2.5 rounded-xl text-left border transition-all flex flex-col justify-between ${
+                    className={`p-2 sm:p-2.5 rounded-xl text-left border transition-all flex flex-col justify-between min-h-[64px] ${
                       isSelected
                         ? 'border-[#C87A8B] bg-gradient-to-br from-[#FDF7F8] to-[#FFF] shadow-xs ring-1 ring-[#C87A8B]'
                         : 'border-[#2B2627]/10 bg-white hover:border-[#C87A8B]/40'
                     }`}
                   >
                     <div className="flex items-center justify-between w-full mb-1">
-                      <span className="text-xl">{s.emoji}</span>
+                      <span className="text-lg sm:text-xl">{s.emoji}</span>
                       {isSelected && (
-                        <CheckCircle2 className="w-4 h-4 text-[#C87A8B]" />
+                        <CheckCircle2 className="w-3.5 h-3.5 text-[#C87A8B] shrink-0" />
                       )}
                     </div>
                     <div>
-                      <p className={`text-xs font-semibold leading-snug ${isSelected ? 'text-[#C87A8B]' : 'text-[#2B2627]'}`}>
+                      <p className={`text-[11px] sm:text-xs font-semibold leading-snug line-clamp-2 ${isSelected ? 'text-[#C87A8B]' : 'text-[#2B2627]'}`}>
                         {s.title}
                       </p>
                       <p className="text-[10px] text-[#6B6264] mt-0.5 line-clamp-1">
@@ -167,12 +170,12 @@ export const AppointmentModal: React.FC<AppointmentModalProps> = ({
           </div>
 
           {/* Step 2: Date & Shift Selection */}
-          <div className="bg-white p-3.5 rounded-2xl border border-[#C87A8B]/20 shadow-2xs space-y-3">
-            <label className="block text-xs font-semibold uppercase tracking-wider text-[#6B6264]">
+          <div className="bg-white p-3 rounded-2xl border border-[#C87A8B]/20 shadow-2xs space-y-2.5">
+            <label className="block text-[11px] font-semibold uppercase tracking-wider text-[#6B6264]">
               2. Preferência de Data e Turno
             </label>
             
-            <div className="flex flex-col sm:flex-row gap-3">
+            <div className="flex flex-col sm:flex-row gap-2.5">
               {/* Date Input */}
               <div className="flex-1">
                 <span className="text-[11px] font-medium text-[#2B2627]/80 block mb-1">
@@ -202,7 +205,7 @@ export const AppointmentModal: React.FC<AppointmentModalProps> = ({
                       setPeriod('morning');
                       setTimeSlot('09:30');
                     }}
-                    className={`flex-1 py-1.5 text-xs font-medium rounded-lg transition-colors ${
+                    className={`flex-1 py-1.5 text-[11px] sm:text-xs font-medium rounded-lg transition-colors ${
                       period === 'morning'
                         ? 'bg-white text-[#C87A8B] shadow-2xs font-semibold'
                         : 'text-[#6B6264] hover:text-[#2B2627]'
@@ -216,7 +219,7 @@ export const AppointmentModal: React.FC<AppointmentModalProps> = ({
                       setPeriod('afternoon');
                       setTimeSlot('15:30');
                     }}
-                    className={`flex-1 py-1.5 text-xs font-medium rounded-lg transition-colors ${
+                    className={`flex-1 py-1.5 text-[11px] sm:text-xs font-medium rounded-lg transition-colors ${
                       period === 'afternoon'
                         ? 'bg-white text-[#C87A8B] shadow-2xs font-semibold'
                         : 'text-[#6B6264] hover:text-[#2B2627]'
@@ -230,7 +233,7 @@ export const AppointmentModal: React.FC<AppointmentModalProps> = ({
 
             {/* Time Slot buttons */}
             <div>
-              <span className="text-[11px] font-medium text-[#2B2627]/80 block mb-1.5 flex items-center gap-1">
+              <span className="text-[11px] font-medium text-[#2B2627]/80 block mb-1 flex items-center gap-1">
                 <Clock className="w-3 h-3 text-[#C87A8B]" />
                 Horário aproximado desejado:
               </span>
@@ -240,7 +243,7 @@ export const AppointmentModal: React.FC<AppointmentModalProps> = ({
                     key={slot}
                     type="button"
                     onClick={() => setTimeSlot(slot)}
-                    className={`py-1.5 text-xs rounded-lg border text-center transition-all ${
+                    className={`py-1.5 px-1 text-[11px] sm:text-xs rounded-lg border text-center transition-all ${
                       timeSlot === slot
                         ? 'border-[#C87A8B] bg-[#C87A8B] text-white font-semibold shadow-2xs'
                         : 'border-[#2B2627]/10 bg-white text-[#2B2627] hover:border-[#C87A8B]/30'
@@ -254,13 +257,13 @@ export const AppointmentModal: React.FC<AppointmentModalProps> = ({
           </div>
 
           {/* Step 3: Patient info */}
-          <div className="space-y-2.5">
-            <label className="block text-xs font-semibold uppercase tracking-wider text-[#6B6264]">
+          <div className="space-y-2">
+            <label className="block text-[11px] font-semibold uppercase tracking-wider text-[#6B6264]">
               3. Dados para Confirmação
             </label>
 
             <div className="relative">
-              <User className="w-3.5 h-3.5 text-[#C87A8B] absolute left-3 top-3 pointer-events-none" />
+              <User className="w-3.5 h-3.5 text-[#C87A8B] absolute left-3 top-2.5 pointer-events-none" />
               <input
                 type="text"
                 placeholder="Seu nome completo"
@@ -271,7 +274,7 @@ export const AppointmentModal: React.FC<AppointmentModalProps> = ({
             </div>
 
             <div className="relative">
-              <Phone className="w-3.5 h-3.5 text-[#C87A8B] absolute left-3 top-3 pointer-events-none" />
+              <Phone className="w-3.5 h-3.5 text-[#C87A8B] absolute left-3 top-2.5 pointer-events-none" />
               <input
                 type="tel"
                 placeholder="Seu WhatsApp (ex: 96 99999-9999)"
@@ -282,13 +285,13 @@ export const AppointmentModal: React.FC<AppointmentModalProps> = ({
             </div>
 
             <div className="relative">
-              <FileText className="w-3.5 h-3.5 text-[#C87A8B] absolute left-3 top-3 pointer-events-none" />
+              <FileText className="w-3.5 h-3.5 text-[#C87A8B] absolute left-3 top-2.5 pointer-events-none" />
               <textarea
                 rows={2}
-                placeholder="Observações ou queixa principal (opcional: sensibilidade, primeira consulta, urgência...)"
+                placeholder="Observações (opcional: sensibilidade, primeira consulta, urgência...)"
                 value={notes}
                 onChange={(e) => setNotes(e.target.value)}
-                className="w-full bg-white border border-[#2B2627]/15 rounded-xl pl-9 pr-3 py-2 text-xs text-[#2B2627] placeholder:text-[#6B6264]/60 focus:outline-none focus:ring-1 focus:ring-[#C87A8B] focus:border-[#C87A8B] resize-none"
+                className="w-full bg-white border border-[#2B2627]/15 rounded-xl pl-9 pr-3 py-1.5 text-xs text-[#2B2627] placeholder:text-[#6B6264]/60 focus:outline-none focus:ring-1 focus:ring-[#C87A8B] focus:border-[#C87A8B] resize-none"
               />
             </div>
           </div>
@@ -296,7 +299,7 @@ export const AppointmentModal: React.FC<AppointmentModalProps> = ({
           {/* Appointment Preview Box */}
           <div className="bg-[#FDF7F8] border border-[#D98C9D]/30 rounded-2xl p-3 text-xs text-[#2B2627]">
             <div className="flex items-center gap-1.5 font-semibold text-[#8C4656] mb-1">
-              <Sparkles className="w-3.5 h-3.5 text-[#D4AF37]" />
+              <Sparkles className="w-3.5 h-3.5 text-[#D4AF37] shrink-0" />
               <span>Resumo do Agendamento:</span>
             </div>
             <p className="text-xs text-[#2B2627]">
@@ -311,21 +314,21 @@ export const AppointmentModal: React.FC<AppointmentModalProps> = ({
             <div className="p-2.5 bg-emerald-50 border border-emerald-200 rounded-xl text-emerald-800 text-xs flex items-center gap-2">
               <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
               <span>
-                Excelente! Os dados foram processados. A equipe da Smille confirmará seu horário.
+                Excelente! Dados prontos. Envie no WhatsApp para confirmar o horário com a recepção.
               </span>
             </div>
           )}
         </div>
 
-        {/* Action Buttons Footer */}
-        <div className="p-4 bg-white border-t border-[#C87A8B]/15 space-y-2 shrink-0">
+        {/* Action Buttons Footer with Safe Area */}
+        <div className="p-3 sm:p-4 pb-[max(0.75rem,env(safe-area-inset-bottom))] bg-white border-t border-[#C87A8B]/15 space-y-2 shrink-0">
           {/* Main Action: WhatsApp */}
           <button
             onClick={handleWhatsAppSubmit}
             type="button"
-            className="w-full py-3 px-4 rounded-xl text-white font-medium text-xs sm:text-sm flex items-center justify-center gap-2 bg-gradient-to-r from-[#25D366] to-[#128C7E] hover:opacity-95 shadow-md shadow-emerald-500/20 active:scale-[0.99] transition-transform"
+            className="w-full min-h-[46px] py-2.5 px-4 rounded-xl text-white font-medium text-xs sm:text-sm flex items-center justify-center gap-2 bg-gradient-to-r from-[#25D366] to-[#128C7E] hover:opacity-95 shadow-md shadow-emerald-500/20 active:scale-[0.99] transition-transform"
           >
-            <MessageCircle className="w-4 h-4" />
+            <MessageCircle className="w-4 h-4 shrink-0" />
             <span>Confirmar e Enviar via WhatsApp</span>
           </button>
 
@@ -334,20 +337,20 @@ export const AppointmentModal: React.FC<AppointmentModalProps> = ({
             <button
               onClick={handleGoogleCalendar}
               type="button"
-              className="flex-1 py-2 px-3 rounded-xl border border-[#C87A8B]/40 bg-[#FDF7F8] hover:bg-[#F5E6E8] text-[#8C4656] text-xs font-semibold flex items-center justify-center gap-1.5 transition-colors shadow-2xs"
+              className="flex-1 min-h-[40px] py-2 px-3 rounded-xl border border-[#C87A8B]/40 bg-[#FDF7F8] hover:bg-[#F5E6E8] text-[#8C4656] text-xs font-semibold flex items-center justify-center gap-1.5 transition-colors shadow-2xs"
             >
-              <ExternalLink className="w-3.5 h-3.5 text-[#C87A8B]" />
-              <span>Salvar no Google Agenda</span>
+              <ExternalLink className="w-3.5 h-3.5 text-[#C87A8B] shrink-0" />
+              <span className="truncate">Salvar no Google Agenda</span>
             </button>
 
             <button
               onClick={handleDownloadIcs}
               type="button"
               title="Baixar arquivo de calendário .ics (Apple/Outlook)"
-              className="px-3 py-2 rounded-xl border border-[#2B2627]/15 bg-white hover:bg-slate-50 text-[#6B6264] hover:text-[#2B2627] text-xs font-medium flex items-center justify-center gap-1 transition-colors"
+              className="min-h-[40px] px-3 py-2 rounded-xl border border-[#2B2627]/15 bg-white hover:bg-slate-50 text-[#6B6264] hover:text-[#2B2627] text-xs font-medium flex items-center justify-center gap-1 transition-colors shrink-0"
             >
               <Download className="w-3.5 h-3.5" />
-              <span className="hidden sm:inline">.ICS</span>
+              <span>.ICS</span>
             </button>
           </div>
         </div>

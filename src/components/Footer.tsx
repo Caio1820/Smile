@@ -9,7 +9,7 @@ import {
 
 export const Footer: React.FC = () => {
   return (
-    <footer className="w-full max-w-md mx-auto px-4 pt-4 pb-24 text-center text-xs text-[#6B6264] space-y-3">
+    <footer className="w-full max-w-md mx-auto px-3.5 sm:px-4 pt-4 pb-28 sm:pb-24 text-center text-xs text-[#6B6264] space-y-3">
       <div className="h-px w-24 mx-auto bg-gradient-to-r from-transparent via-[#C87A8B]/30 to-transparent" />
 
       <div>
