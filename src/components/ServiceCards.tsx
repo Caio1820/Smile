@@ -1,0 +1,138 @@
+import React, { useState } from 'react';
+import { Sparkles, Calendar, ChevronDown, ChevronUp, Check, ArrowRight } from 'lucide-react';
+import { CLINIC_SERVICES } from '../data/services';
+import { buildWhatsAppLink } from '../utils/calendar';
+
+interface ServiceCardsProps {
+  onOpenScheduler: (serviceId: string) => void;
+}
+
+export const ServiceCards: React.FC<ServiceCardsProps> = ({ onOpenScheduler }) => {
+  const [expandedCardId, setExpandedCardId] = useState<string | null>(null);
+
+  const toggleExpand = (id: string) => {
+    setExpandedCardId((prev) => (prev === id ? null : id));
+  };
+
+  return (
+    <section className="w-full max-w-md mx-auto px-4 py-4 space-y-4">
+      {/* Section Header */}
+      <div className="text-center space-y-1 mb-5">
+        <div className="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-[#C87A8B] bg-[#FDF7F8] px-3 py-1 rounded-full border border-[#D98C9D]/30">
+          <Sparkles className="w-3.5 h-3.5 text-[#D4AF37]" />
+          <span>Atendimento Personalizado</span>
+        </div>
+        <h2 className="font-serif text-xl sm:text-2xl font-bold text-[#2B2627] tracking-tight">
+          Como podemos transformar o seu sorriso hoje?
+        </h2>
+        <p className="text-xs sm:text-sm text-[#6B6264] max-w-sm mx-auto">
+          Selecione o tratamento desejado para agendar sua avaliação:
+        </p>
+      </div>
+
+      {/* Services List */}
+      <div className="space-y-3.5">
+        {CLINIC_SERVICES.map((service, index) => {
+          const directWhatsAppUrl = buildWhatsAppLink(service.whatsappMessage);
+          const isExpanded = expandedCardId === service.id;
+          const isHighlight = index === 0; // First service gets subtle gentle pulse CTA
+
+          return (
+            <article
+              key={service.id}
+              className="glass-card rounded-2xl p-4 sm:p-5 relative overflow-hidden group text-left transition-all duration-300"
+            >
+              {/* Subtle luxury corner gradient accent */}
+              <div 
+                className="absolute top-0 right-0 w-24 h-24 rounded-full pointer-events-none opacity-20 -mr-8 -mt-8"
+                style={{
+                  background: 'radial-gradient(circle, #D4AF37 0%, #C87A8B 70%, transparent 100%)',
+                }}
+                aria-hidden="true"
+              />
+
+              {/* Service Header Row */}
+              <div className="flex items-start gap-3.5 relative z-10">
+                <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-[#FDF7F8] to-[#F5E6E8] border border-[#C87A8B]/20 flex items-center justify-center text-2xl shrink-0 shadow-2xs group-hover:scale-105 transition-transform">
+                  <span role="img" aria-label={service.title}>{service.emoji}</span>
+                </div>
+
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center justify-between gap-1">
+                    <h3 className="font-serif text-base sm:text-lg font-bold text-[#2B2627] leading-snug group-hover:text-[#8C4656] transition-colors">
+                      {service.title}
+                    </h3>
+                  </div>
+                  <p className="text-xs text-[#2B2627]/85 mt-1 leading-relaxed">
+                    {service.description}
+                  </p>
+                </div>
+              </div>
+
+              {/* Expandable features toggle */}
+              <div className="mt-3 pt-3 border-t border-[#2B2627]/5">
+                <button
+                  type="button"
+                  onClick={() => toggleExpand(service.id)}
+                  className="text-[11px] font-medium text-[#C87A8B] hover:text-[#8C4656] flex items-center justify-between w-full py-0.5 transition-colors"
+                >
+                  <span className="flex items-center gap-1">
+                    {isExpanded ? 'Ocultar detalhes do procedimento' : 'Ver o que inclui este tratamento'}
+                  </span>
+                  {isExpanded ? (
+                    <ChevronUp className="w-3.5 h-3.5 text-[#C87A8B]" />
+                  ) : (
+                    <ChevronDown className="w-3.5 h-3.5 text-[#C87A8B]" />
+                  )}
+                </button>
+
+                {isExpanded && (
+                  <div className="mt-2.5 pt-2 space-y-1.5 animate-in fade-in duration-200">
+                    {service.features.map((feature, fIdx) => (
+                      <div key={fIdx} className="flex items-center gap-2 text-xs text-[#6B6264]">
+                        <Check className="w-3.5 h-3.5 text-[#D4AF37] shrink-0" />
+                        <span>{feature}</span>
+                      </div>
+                    ))}
+                    <div className="pt-1 text-[11px] text-[#2B2627]/60">
+                      <span>Duração estimada da sessão: </span>
+                      <strong className="text-[#C87A8B]">{service.estimatedDuration}</strong>
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              {/* Action Buttons: WhatsApp Direct & Google Calendar Pre-booking */}
+              <div className="mt-3.5 pt-2 flex flex-col gap-2">
+                {/* Primary WhatsApp Direct Button (with smooth pulse animation) */}
+                <a
+                  href={directWhatsAppUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`w-full py-3 px-4 rounded-xl text-center text-xs sm:text-sm font-semibold tracking-wide flex items-center justify-center gap-2 transition-all ${
+                    isHighlight
+                      ? 'bg-gradient-to-r from-[#C87A8B] via-[#D98C9D] to-[#C87A8B] text-white shadow-md shadow-[#C87A8B]/30 animate-pulse-gentle hover:opacity-95'
+                      : 'bg-gradient-to-r from-[#C87A8B] to-[#D98C9D] text-white shadow-xs hover:shadow-md hover:shadow-[#C87A8B]/20 hover:opacity-95'
+                  } active:scale-[0.99]`}
+                >
+                  <span>{service.buttonLabel}</span>
+                  <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5" />
+                </a>
+
+                {/* Secondary: Interactive Date Selection & Google Calendar Sync */}
+                <button
+                  type="button"
+                  onClick={() => onOpenScheduler(service.id)}
+                  className="w-full py-2 px-3 rounded-xl border border-[#C87A8B]/30 hover:border-[#C87A8B] bg-white/70 hover:bg-[#FDF7F8] text-[#8C4656] text-xs font-medium flex items-center justify-center gap-1.5 transition-all shadow-2xs active:scale-[0.99]"
+                >
+                  <Calendar className="w-3.5 h-3.5 text-[#C87A8B]" />
+                  <span>Escolher Data & Salvar no Google Agenda</span>
+                </button>
+              </div>
+            </article>
+          );
+        })}
+      </div>
+    </section>
+  );
+};

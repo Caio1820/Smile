@@ -1,0 +1,74 @@
+@import "tailwindcss";
+
+@theme {
+  --font-serif: "Cormorant Garamond", Georgia, serif;
+  --font-sans: "Plus Jakarta Sans", system-ui, -apple-system, sans-serif;
+  
+  --color-smille-bg: #FAFAFA;
+  --color-smille-rose: #C87A8B;
+  --color-smille-rose-light: #D98C9D;
+  --color-smille-rose-soft: #E6A3B2;
+  --color-smille-rose-bg: #FDF7F8;
+  --color-smille-gold: #D4AF37;
+  --color-smille-gold-light: #F3E5AB;
+  --color-smille-dark: #2B2627;
+  --color-smille-muted: #6B6264;
+}
+
+@keyframes pulse-gentle {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 4px 18px rgba(200, 122, 139, 0.3);
+  }
+  50% {
+    transform: scale(1.02);
+    box-shadow: 0 8px 26px rgba(200, 122, 139, 0.48);
+  }
+}
+
+@keyframes float-subtle {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-4px);
+  }
+}
+
+.animate-pulse-gentle {
+  animation: pulse-gentle 2.8s ease-in-out infinite;
+}
+
+.animate-float-subtle {
+  animation: float-subtle 4s ease-in-out infinite;
+}
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.94);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(200, 122, 139, 0.16);
+  box-shadow: 0 4px 18px rgba(200, 122, 139, 0.09);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.glass-card:hover {
+  border-color: rgba(200, 122, 139, 0.36);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 26px rgba(200, 122, 139, 0.16);
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #FAFAFA;
+}
+::-webkit-scrollbar-thumb {
+  background: #E6A3B2;
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #C87A8B;
+}

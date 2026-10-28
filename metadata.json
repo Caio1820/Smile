@@ -1,0 +1,7 @@
+{
+  "name": "Smille - Consultório Odontológico",
+  "description": "BioSite de Agendamento Interativo de alta conversão para o Smille - Consultório Odontológico, Dra. Sabrina Oliveira (CRO 1156-AP) em Macapá/AP.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
+
